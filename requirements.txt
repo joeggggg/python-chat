@@ -1,0 +1,8 @@
+streamlit
+python-dotenv 
+litellm
+pytest
+openai
+google-generativeai 
+Pillow
+tiktoken
