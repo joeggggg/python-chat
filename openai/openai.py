@@ -1,41 +1,65 @@
-#from multiprocessing import process
-import os
-from openai import OpenAI
-from dotenv import load_dotenv
+# #from multiprocessing import process
+# import litellm
+# from litellm import completion
+# import os
+# from dotenv import load_dotenv
+# import streamlit as st
+# from st_pages import Page, Section, show_pages, add_page_title
 
-client = OpenAI(
-  api_key=os.getenv("OPENAI_API_KEY"),
- )
-
-#  async client
-stream = client.chat.completions.create(
-    model="gpt-3.5-turbo-1106",
-    messages=[{"role": "user", 
-             "content": "Help me create a web application in Python with Streamlit, OpenAI API, to perform a chat, and save the conversation to Postgres database"
-            }
-               ],
-    stream=True,
-)
-for chunk in stream:
-    if chunk.choices[0].delta.content is not None:
-        print(chunk.choices[0].delta.content.format)
-
-# client = OpenAI(
-#   # api_key=os.environ.get("OPENAI_API_KEY"),
-#   api_key=os.getenv("OPENAI_API_KEY")
-#  )
+# #init
+# load_dotenv()  
+# os.environ["OPENAI_API_KEY"] = os.getenv('OPENAI_API_KEY')
+# prompt_text = "Help me create a web application in Python with Streamlit and supported packages such as pandas, psycopg2. The purpose of the web app is enabling can allow user to upload document such as .csv, .docx, .pdf and perform a chat. While uploaded document chunks, conversation history shall be saved to Postgres database"
+#  # Stores conversation history 
+# conversation = [] 
 
 
-# chat_completion = client.chat.completions.create(
-#   model="gpt-3.5-turbo",
-#   messages=[
-#     {"role": "system", 
-#      "content": "You act as a successful aesthetic."},
-#     {"role": "user", 
-#      "content": "Help me to create a healthy meal plan x 30 days."
-#      }
-#   ]
-# )
+# def chat_openai(prompt_input, conversation):
+#     messages = [
+#     {
+#         "role": "user",
+#         "content": [
+#             {
+#                 "type": "text",
+#                 "text": prompt_input
+#             }
+#         ]
+#     }
+#     ]   
+#     response = completion(
+#             model="gpt-3.5-turbo", 
+#             messages=messages,
+#             temperature=0.9,
+#             stream=True
+#             )
+    
+#     output_text = ""
+#     for part in response:
+#         output_text += part.choices[0].delta.content or ""
+#     conversation.append(prompt_input)
+#     conversation.append(output_text)
+#     return output_text
+
+# # chat_openai(prompt_text, conversation)      
+# # execute
+# conversation = chat_openai(prompt_text, conversation)
 
 
-# print(chat_completion.choices[0].message)
+# st.title("Chat with ChatGPT")
+
+# # prompt_text = st.text_input("Enter your prompt:")
+# prompt_text = st.text_input(prompt_text)
+
+# if prompt_text:
+#   response_text = chat_openai(prompt_text, conversation)
+#   st.write("**🐸 Your Prompt:**")
+#   st.write(conversation[0])
+#   st.write("**🤖 ChatGPT's Response:**")
+#   st.markdown(response_text)
+
+#   # Display Chat History (Optional)
+#   # Uncomment the following block to display the entire conversation history
+#   st.write("**Conversation History:**")
+#   for i in range(0, len(conversation), 2):
+#     st.write(f"You: {conversation[i]}")
+#     st.write(f"Gemini: {conversation[i+1]}")

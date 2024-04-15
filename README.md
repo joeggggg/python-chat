@@ -8,10 +8,6 @@
 
 - Packages: litellm, langchain
 
-### resources
-- [LiteLLM](https://github.com/BerriAI/litellm/)
-- 
-
 ## Get-started
 
 ### Python env setup
@@ -25,7 +21,7 @@ py -3 -m venv venv
 ```
 .\venv\Scripts\activate.bat
 ```
-- common packages installation:
+### common packages installation:
  ```
 pip install -r requirements.txt
  ```
@@ -37,12 +33,12 @@ pip install openai tiktoken
 ```
 pip install -q -U google-generativeai Pillow
 ```
-
+### environment variables
 - To set the environment variable in the current session 
 ```
 setx OPENAI_API_KEY "your-opepnai-api-key"
 
 ```
 
-#### ref for packages docs
-- [openai](https://platform.openai.com/docs/api-reference/introduction)
+### resources
+- [LiteLLM](https://github.com/BerriAI/litellm/)

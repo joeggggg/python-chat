@@ -6,3 +6,5 @@ openai
 google-generativeai 
 Pillow
 tiktoken
+ipykernel
+st_pages
