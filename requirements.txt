@@ -8,3 +8,7 @@ Pillow
 tiktoken
 ipykernel
 st_pages
+langchain
+langchain-openai
+beautifulsoup4
+faiss-cpu
