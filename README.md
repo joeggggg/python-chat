@@ -1,9 +1,9 @@
 # python chat 
 ## Introduction
 
-- Learn to interact with different llm models, such as OpenAI, Google Gemini, HuggingFace, VertexAI and etc., 
-- And LLM with Langchain, VectorDB, ...
-
+- Learn to interact with different llm models, such as OpenAI, Google Gemini, Google Gemini Vision, HuggingFace, VertexAI and etc., 
+- And LLM with LiteLLM, Langchain, VectorDB, ...
+- Feed knowledge to llm for RAG, such as .csv, .pdf, website, etc
 #### stacks
 
 - Packages: litellm, langchain
@@ -42,3 +42,4 @@ setx OPENAI_API_KEY "your-opepnai-api-key"
 
 ### resources
 - [LiteLLM](https://github.com/BerriAI/litellm/)
+- [Lanchain](https://www.youtube.com/watch?v=MlK6SIjcjE8&t=7s)
