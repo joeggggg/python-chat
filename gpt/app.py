@@ -1,21 +1,22 @@
 import os
-# from apikey import apikey
+import time
+
 from dotenv import load_dotenv
 import streamlit as st
 from langchain_openai import OpenAI
-# from langchain.globals import set_verbose, get_verbose
 from langchain.prompts import PromptTemplate
-from langchain.chains import LLMChain, SequentialChain
+from langchain.chains import LLMChain
 from langchain.memory import ConversationBufferMemory
-import time
+from langchain_community.utilities import WikipediaAPIWrapper
 
 #init
 load_dotenv() 
 user = os.getlogin().upper()
 os.environ["OPENAI_API_KEY"] = os.getenv('OPENAI_API_KEY')
+wiki = WikipediaAPIWrapper()
+llm = OpenAI(temperature=0.9)
 
-api_key = os.environ["OPENAI_API_KEY"]
-
+#utilities
 def stream(text):
     result = ""
     container = st.empty()
@@ -35,54 +36,38 @@ title_template = PromptTemplate(
 )
 
 script_template = PromptTemplate(
-    input_variables=['title'],
-    template='highlight top 10 most important concepts I need to know about this topic TOPIC : {title} , each concept should come with sample code example, make sure you wrap code blocks with ``` ``` so that it can be formatted in markdown'
+    input_variables=['title','wikipedia_research'],
+    template='Now, you will highlight top 10 most important concepts I need to know about {title} while leveraging this wikipedia research {wikipedia_research}.'
     
 )
 # memory 
-memory = ConversationBufferMemory(input_key='topic', memory_key='chat_history')
+# title_memory = ConversationBufferMemory(input_key='topic', memory_key='chat_history')
+title_memory = ConversationBufferMemory(input_key='topic', memory_key='chat_history')
+script_memory = ConversationBufferMemory(input_key='title', memory_key='chat_history')
 
-llm = OpenAI(temperature=0.9)
 
 title_chain = LLMChain(llm=llm,prompt=title_template, verbose=True,
-    output_key='title', memory=memory) 
+    output_key='title', memory=title_memory) 
 script_chain = LLMChain(llm=llm,prompt=script_template, verbose=True,
-    output_key='script', memory=memory) 
-sequential_chain = SequentialChain(chains=[title_chain, script_chain], 
-    input_variables=['topic'], output_variables=['title','script'], verbose=True)  
-conversation = [] 
+    output_key='script', memory=script_memory) 
+# sequential_chain = SequentialChain(chains=[title_chain, script_chain], 
+#     input_variables=['topic'], output_variables=['title','script'], verbose=True)  
+
+#conversation = [] 
 if prompt:
-    # from langchain_core.prompts import ChatPromptTemplate
-    # prompt = ChatPromptTemplate.from_messages([
-    #     ("system", "You are world class technical documentation writer."),
-    #     ("user", "{input}")
-    # ])
-    
-    # response = llm.invoke(prompt)
-    # response = title_chain.run(topic = prompt)
-    response = sequential_chain({'topic': prompt})
-    # st.write("**🐸 Your Prompt:**")
-#   st.write(conversation[0])
-    #st.write("**🐸 :**")
-    st.write("**🤖 typing... :**")
-    with st.spinner("responding..."):
-        # write_stream(stream=get_stream(text))
-        stream(response['title'])
-    # st.markdown(response['title'])
-    with st.spinner("responding..."):
-        # write_stream(stream=get_stream(text))
-        stream(response['script'])
-    # st.markdown(response['script'])
-    with st.expander('Conversation History'):
-        st.info(memory.buffer)
+    title = title_chain.run(prompt)
+    wiki_research = wiki.run(prompt) 
+    script = script_chain.run(title=title, wikipedia_research=wiki_research)
 
-# langchain
-# llm.invoke("how can langsmith help with testing?")
-
-# We can also guide its response with a prompt template. Prompt templates convert raw user input to better input to the LLM.
-
-# from langchain_core.prompts import ChatPromptTemplate
-# prompt = ChatPromptTemplate.from_messages([
-#     ("system", "You are world class technical documentation writer."),
-#     ("user", "{input}")
-# ])
+    # response = sequential_chain({'topic': prompt})
+    # st.write(response['title'])
+    st.write(title) 
+    with st.spinner("**🤖 typing... :**"):
+        # stream(response['script'])
+        stream(script)
+    with st.expander('Topic History'):
+        st.info(title_memory.buffer)
+    with st.expander('Response History'):
+        st.info(script_memory.buffer)
+    with st.expander('Wiki Research'):
+        st.info(wiki_research)

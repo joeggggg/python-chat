@@ -6,7 +6,9 @@
 - Feed knowledge to llm for RAG, such as .csv, .pdf, website, etc
 #### stacks
 
-- Packages: litellm, langchain
+- llm development with langchain orchestration framework
+- vectordb
+
 
 ## Get-started
 
@@ -43,3 +45,6 @@ setx OPENAI_API_KEY "your-opepnai-api-key"
 ### resources
 - [LiteLLM](https://github.com/BerriAI/litellm/)
 - [Lanchain](https://www.youtube.com/watch?v=MlK6SIjcjE8&t=7s)
+
+## topics
+- [issue with chromadb installation](https://stackoverflow.com/questions/73969269/error-could-not-build-wheels-for-hnswlib-which-is-required-to-install-pyprojec)

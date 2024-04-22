@@ -12,3 +12,6 @@ langchain
 langchain-openai
 beautifulsoup4
 faiss-cpu
+wikipedia
+chromadb
+tiktoken
