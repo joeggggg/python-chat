@@ -1,13 +1,14 @@
-# import streamlit as st
-# from st_pages import Page, Section, show_pages, add_page_title
+import streamlit as st
+from st_pages import Page, Section, show_pages, add_page_title
 
-# show_pages(
-#     [
+show_pages(
+    [
      
-#         Page("google/gemini.py","Gemini", "🔗"),
+        Page("google/litellm_gemini.py","Gemini", "✌️"),
    
-#         Page("openai/openai.py", "ChatGPT", ":books:"),
+        Page("openai/chatgpt_wiki.py", "ChatGPT", "👌"),
+        Page("openai/chatgpt_stream.py", "ChatGPT", "👌"),
       
       
-#     ]
-# )
+    ]
+)
