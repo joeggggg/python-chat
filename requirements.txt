@@ -10,6 +10,7 @@ ipykernel
 st_pages
 langchain
 langchain-openai
+langchain-google-genai
 beautifulsoup4
 faiss-cpu
 wikipedia
